@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngff.openmicroscopy.org/0.5/schemas/ome_zarr.schema",
+  "anyOf": [
+    {
+      "$ref": "bf2raw.schema"
+    },
+    {
+      "$ref": "image.schema"
+    },
+    {
+      "$ref": "label.schema"
+    },
+    {
+      "$ref": "ome.schema"
+    },
+    {
+      "$ref": "plate.schema"
+    },
+    {
+      "$ref": "well.schema"
+    }
+  ]
+}

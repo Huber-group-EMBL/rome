@@ -1,0 +1,44 @@
+---
+format:
+  gfm:
+    default-image-extension: ""
+---
+
+<!-- README.md is generated from README.qmd. Please edit that file -->
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# rome
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of rome is to ...
+
+## Installation
+
+You can install the development version of rome like so:
+
+``` r
+# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r}
+#| label: example
+library(rome)
+ome_read(
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0062A/6001240.zarr"
+)
+```

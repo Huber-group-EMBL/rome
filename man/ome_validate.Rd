@@ -2,7 +2,7 @@
 % Please edit documentation in R/ome_validate.R
 \name{ome_validate}
 \alias{ome_validate}
-\title{Validate OME-Zarr file}
+\title{Validate a multiscale OME-Zarr file}
 \usage{
 ome_validate(path, s3_client = NULL)
 }
@@ -17,5 +17,5 @@ This function is used for its side-effect and will return an error when
 passed an invalid OME-Zarr file
 }
 \description{
-Validate OME-Zarr file
+Validate a multiscale OME-Zarr file
 }

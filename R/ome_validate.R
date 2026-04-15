@@ -1,4 +1,4 @@
-#' Validate OME-Zarr file
+#' Validate a multiscale OME-Zarr file
 #' 
 #' @inheritParams ome_read
 #' 

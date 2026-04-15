@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ngff.openmicroscopy.org/0.5/schemas/image.schema",
+  "$id": "image.schema",
   "title": "OME-Zarr Image",
   "description": "The zarr.json attributes key",
   "type": "object",
@@ -40,7 +40,7 @@
           },
           "datasets": {
             "type": "array",
-            "minItems": "1",
+            "minItems": 1,
             "items": {
               "type": "object",
               "properties": {
@@ -69,8 +69,8 @@
           "axes"
         ]
       },
-      "minItems": "1",
-      "uniqueItems": "TRUE"
+      "minItems": 1,
+      "uniqueItems": true
     },
     "omero": {
       "type": "object",
@@ -125,9 +125,9 @@
     },
     "axes": {
       "type": "array",
-      "uniqueItems": "TRUE",
-      "minItems": "2",
-      "maxItems": "5",
+      "uniqueItems": true,
+      "minItems": 2,
+      "maxItems": 5,
       "contains": {
         "type": "object",
         "properties": {
@@ -145,8 +145,8 @@
           }
         }
       },
-      "minContains": "2",
-      "maxContains": "3",
+      "minContains": 2,
+      "maxContains": 3,
       "items": {
         "oneOf": [
           {
@@ -195,7 +195,7 @@
     },
     "coordinateTransformations": {
       "type": "array",
-      "minItems": "1",
+      "minItems": 1,
       "contains": {
         "type": "object",
         "properties": {
@@ -207,14 +207,14 @@
           },
           "scale": {
             "type": "array",
-            "minItems": "2",
+            "minItems": 2,
             "items": {
               "type": "number"
             }
           }
         }
       },
-      "maxContains": "1",
+      "maxContains": 1,
       "items": {
         "oneOf": [
           {
@@ -228,7 +228,7 @@
               },
               "scale": {
                 "type": "array",
-                "minItems": "2",
+                "minItems": 2,
                 "items": {
                   "type": "number"
                 }
@@ -250,7 +250,7 @@
               },
               "translation": {
                 "type": "array",
-                "minItems": "2",
+                "minItems": 2,
                 "items": {
                   "type": "number"
                 }

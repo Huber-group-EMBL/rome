@@ -5,8 +5,8 @@
     "0.1" = NULL,
     "0.2" = NULL,
     "0.3" = metadata$ome$multiscales[[1]]$axes,
-    "0.4" = metadata$ome$multiscales[[1]]$axes |> vapply(function(axis) axis$name),
-    "0.5" = metadata$ome$multiscales[[1]]$axes |> vapply(function(axis) axis$name),
+    "0.4" = metadata$ome$multiscales[[1]]$axes |> vapply(function(axis) axis$name, character(1)),
+    "0.5" = metadata$ome$multiscales[[1]]$axes |> vapply(function(axis) axis$name, character(1)),
     stop("Unsupported OME version: ", ome_version)
   )
   return(dim_names)

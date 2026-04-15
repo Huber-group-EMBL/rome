@@ -1,6 +1,6 @@
 ^LICENSE\.md$
 ^README\.qmd$
-^data\-raw/$
+^data-raw$
 ^\.github$
 ^_pkgdown\.yml$
 ^docs$

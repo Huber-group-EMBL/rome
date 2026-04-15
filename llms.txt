@@ -1,0 +1,47 @@
+# rome
+
+The goal of rome is to …
+
+## Installation
+
+You can install the development version of rome like so:
+
+``` r
+# install.packages("pak")
+pak::pak("Huber-group-EMBL/rome")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(rome)
+x <- ome_read(
+  system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
+)
+#> Warning in group_attributes$ome: partial match of 'ome' to 'omero'
+#> Warning in group_attributes$ome: partial match of 'ome' to 'omero'
+plot(x, all = TRUE)
+```
+
+![](reference/figures/README-example-1.png)
+
+# Package index
+
+## All functions
+
+- [`extract_levels()`](https://huber-group-embl.github.io/rome/reference/extract_levels.md)
+  : Extract specific levels from a multiscale OME-Zarr object
+
+- [`ome_read()`](https://huber-group-embl.github.io/rome/reference/ome_read.md)
+  : Read a multiscale OME-Zarr file
+
+- [`plot(`*`<ome_zarr>`*`)`](https://huber-group-embl.github.io/rome/reference/plot.ome_zarr.md)
+  :
+
+  Plot an `ome_zarr` object.
+
+- [`` `[`( ``*`<ome_zarr>`*`)`](https://huber-group-embl.github.io/rome/reference/sub-.ome_zarr.md)
+  : Subset an OME-Zarr object
+

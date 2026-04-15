@@ -1,8 +1,8 @@
-# Subset an OME-Zarr object
+# Subset an `ome-zarr` object
 
-Subset operation is applied on all levels of the multiscale OME-Zarr
-object. The result is an OME-Zarr object with the same number of levels,
-but each level is subsetted according to the provided indices.
+Subset operation is applied on all levels of the multiscale `ome-zarr`
+object. The result is an `ome-zarr` object with the same number of
+levels, but each level is subsetted according to the provided indices.
 
 ## Usage
 
@@ -15,11 +15,11 @@ x[...]
 
 - x:
 
-  An OME-Zarr object.
+  An `ome-zarr` object.
 
 - ...:
 
-  Indices to subset the OME-Zarr object.
+  Indices to subset the `ome-zarr` object.
 
 ## Details
 

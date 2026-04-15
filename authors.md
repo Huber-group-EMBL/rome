@@ -8,6 +8,9 @@
 
 ## Citation
 
+Source:
+[`DESCRIPTION`](https://github.com/Huber-group-EMBL/rome/blob/main/DESCRIPTION)
+
 Gruson H (2026). *rome: Minimal R 'OME-Zarr' Reader*. R package version
 0.0.0.9000, <https://huber-group-embl.github.io/rome/>.
 

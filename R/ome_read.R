@@ -21,7 +21,7 @@
 #'   system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
 #' )
 
-ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
+ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
 
   # FIXME: check we're in a group
   if (validate) {
@@ -32,8 +32,14 @@ ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
   ome_version <- group_attributes$ome$version
   scales <- get_scales(group_attributes, ome_version)
 
+  read_zarr <- if (lazy) {
+    ZarrArray::ZarrArray
+  } else {
+    Rarr::read_zarr_array
+  }
+
   x <- lapply(scales$datasets, function(scale) {
-    read_zarr_array(file.path(path, scale$path), s3_client = s3_client)
+    read_zarr(file.path(path, scale$path), s3_client = s3_client)
   })
 
   class(x) <- "ome_zarr"

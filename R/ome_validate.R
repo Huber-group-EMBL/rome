@@ -5,7 +5,7 @@ ome_validate <- function(path, s3_client = NULL) {
   schema <- system.file(
     "schemas",
     ome_version,
-    "ome_zarr.schema",
+    "image.schema",
     package = "rome"
   )
   jsonvalidate::json_validate(

@@ -1,6 +1,6 @@
-# Validate OME-Zarr file
+# Validate a multiscale OME-Zarr file
 
-Validate OME-Zarr file
+Validate a multiscale OME-Zarr file
 
 ## Usage
 

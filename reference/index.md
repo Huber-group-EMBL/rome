@@ -5,7 +5,7 @@
 - [`ome_read()`](https://huber-group-embl.github.io/rome/reference/ome_read.md)
   : Read a multiscale OME-Zarr file
 - [`ome_validate()`](https://huber-group-embl.github.io/rome/reference/ome_validate.md)
-  : Validate OME-Zarr file
+  : Validate a multiscale OME-Zarr file
 
 ## Manipulating `ome_zarr` objects
 

@@ -13,7 +13,8 @@
 #' 
 #' @examples
 #' ome_read(
-#'   system.file("extdata", "ome-v0.2", "6001247.zarr", package = "rome")
+#'   system.file("extdata", "ome-v0.2", "6001247.zarr", package = "rome"),
+#'   validate = FALSE
 #' )
 #' 
 #' ome_read(

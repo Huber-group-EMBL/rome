@@ -8,8 +8,8 @@
 #' resulting dimensions are used to subset the remaining levels, while
 #' conserving the same scaling factor across levels
 #' 
-#' @inheritParams base::Extract
 #' @param x An OME-Zarr object.
+#' @param ... Indices to subset the OME-Zarr object.
 #' 
 #' @export
 #' 
@@ -21,10 +21,10 @@
 #' extract_levels(y, 2)
 #' plot(y, level = 2)
 #' 
-`[.ome_zarr` <- function(x, i = NULL, j = NULL, ..., drop = FALSE) {
+`[.ome_zarr` <- function(x, ...) {
   x <- lapply(x, function(layer) {
     scale <- attr(layer, "scale")
-    indices <- list(i, j, ...)
+    indices <- list(...)
     indices <- mapply(
       function(idx, scaling_factor) {
         if (is.null(idx)) {
@@ -38,7 +38,7 @@
       scale,
       SIMPLIFY = FALSE
     )
-    do.call(`[`, c(list(layer), indices, list(drop = drop)))
+    do.call(`[`, c(list(layer), indices))
   })
   class(x) <- "ome_zarr"
   return(x)

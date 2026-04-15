@@ -4,16 +4,12 @@
 \alias{[.ome_zarr}
 \title{Subset an OME-Zarr object}
 \usage{
-\method{[}{ome_zarr}(x, i, j, ..., drop = TRUE)
+\method{[}{ome_zarr}(x, ...)
 }
 \arguments{
 \item{x}{An OME-Zarr object.}
 
-\item{drop}{relevant for matrices and arrays.  If \code{TRUE} the result is
-    coerced to the lowest possible dimension (see the examples).  This
-    only works for extracting elements, not for the replacement.  See
-    \code{\link[base]{drop}} for further details.
-  }
+\item{...}{Indices to subset the OME-Zarr object.}
 }
 \description{
 Subset operation is applied on all levels of the multiscale OME-Zarr object.
@@ -29,6 +25,8 @@ conserving the same scaling factor across levels
 x <- ome_read(
   system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
 )
-x[1, 1:5, 1:5]
+y <- x[3, 1:5, 1:5]
+extract_levels(y, 2)
+plot(y, level = 2)
 
 }

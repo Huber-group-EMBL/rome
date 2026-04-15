@@ -4,25 +4,16 @@ ome_validate <- function(path, s3_client = NULL) {
   ome_version <- group_attributes$ome$version
 
   cache_folder <- tools::R_user_dir("rome", which = "cache")
-  schema <- file.path(
-    cache_folder,
+
+  # We cannot download the schemas on the fly because we patch them to use local references 
+  # as jsonvalidate doesn't support remote references
+  # (https://github.com/ropensci/jsonvalidate/issues/70)
+  schema <- system.file(
+    "extdata",
     "ome-schemas",
     ome_version,
     "image.schema"
   )
-  if (!file.exists(schema)) {
-    if (!dir.exists(dirname(schema))) {
-      dir.create(dirname(schema), recursive = TRUE)
-    }
-    download.file(
-      url = paste0(
-        "https://ngff.openmicroscopy.org/",
-        ome_version,
-        "/schemas/image.schema"
-      ),
-      destfile = schema
-    )
-  }
 
   jsonvalidate::json_validate(
     jsonlite::toJSON(group_attributes, auto_unbox = TRUE),

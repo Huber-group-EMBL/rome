@@ -24,7 +24,7 @@
 #'   system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
 #' )
 
-ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
+ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
 
   # FIXME: check we're in a group
   if (validate) {

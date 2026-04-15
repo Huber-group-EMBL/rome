@@ -58,6 +58,15 @@ ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
     return(img)
   })
 
+  x <- mapply(
+    function(img, scale) {
+      attr(img, "scale") <- scale
+      return(img)
+    },
+    x, 
+    lapply(scales$datasets, function(x) unlist(x$coordinateTransformations[[1]]$scale)),
+    SIMPLIFY = FALSE
+  )
   class(x) <- "ome_zarr"
 
   return(x)

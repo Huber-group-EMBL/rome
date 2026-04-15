@@ -32,8 +32,8 @@ ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
   
   group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)
   ome_version <- group_attributes$ome$version
-  scales <- get_scales(group_attributes, ome_version)
-  dim_names <- get_dim_names(group_attributes, ome_version)
+  scales <- .get_scales(group_attributes, ome_version)
+  dim_names <- .get_dim_names(group_attributes, ome_version)
 
   read_zarr <- if (lazy) {
     ZarrArray::ZarrArray

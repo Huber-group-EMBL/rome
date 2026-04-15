@@ -33,6 +33,7 @@ ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
   group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)
   ome_version <- group_attributes$ome$version
   scales <- get_scales(group_attributes, ome_version)
+  dim_names <- get_dim_names(group_attributes, ome_version)
 
   read_zarr <- if (lazy) {
     ZarrArray::ZarrArray
@@ -41,7 +42,14 @@ ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
   }
 
   x <- lapply(scales$datasets, function(scale) {
-    read_zarr(file.path(path, scale$path), s3_client = s3_client)
+    img <- read_zarr(file.path(path, scale$path), s3_client = s3_client)
+    if (!is.null(dim_names)) {
+      dimnames(img) <- setNames(
+        vector("list", length = length(dim(img))),
+        dim_names
+      )
+    }
+    return(img)
   })
 
   class(x) <- "ome_zarr"

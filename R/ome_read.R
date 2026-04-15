@@ -8,6 +8,7 @@
 #'   may result in better performance.
 #' @param validate Logical.If `TRUE` (the default), validate the OME-Zarr file.
 #' 
+#' @importFrom stats setNames
 #' @export
 #' 
 #' @examples

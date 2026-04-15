@@ -2,23 +2,23 @@
 % Please edit documentation in R/extract_level.R
 \name{extract_levels}
 \alias{extract_levels}
-\title{Extract specific levels from a multiscale OME-Zarr object}
+\title{Extract specific levels from a multiscale \code{ome-zarr} object}
 \usage{
 extract_levels(x, levels)
 }
 \arguments{
-\item{x}{An OME-Zarr object.}
+\item{x}{An \code{ome-zarr} object.}
 
 \item{levels}{Integer vector specifying the levels to extract.}
 }
 \value{
 \itemize{
 \item If \code{levels} is of length 1, an array
-\item If \code{levels} is of length more than 1, an OME-Zarr object
+\item If \code{levels} is of length more than 1, an \code{ome-zarr} object
 }
 }
 \description{
-Extract specific levels from a multiscale OME-Zarr object
+Extract specific levels from a multiscale \code{ome-zarr} object
 }
 \examples{
 x <- ome_read(

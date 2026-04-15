@@ -2,18 +2,18 @@
 % Please edit documentation in R/subset.R
 \name{[.ome_zarr}
 \alias{[.ome_zarr}
-\title{Subset an OME-Zarr object}
+\title{Subset an \code{ome-zarr} object}
 \usage{
 \method{[}{ome_zarr}(x, ...)
 }
 \arguments{
-\item{x}{An OME-Zarr object.}
+\item{x}{An \code{ome-zarr} object.}
 
-\item{...}{Indices to subset the OME-Zarr object.}
+\item{...}{Indices to subset the \code{ome-zarr} object.}
 }
 \description{
-Subset operation is applied on all levels of the multiscale OME-Zarr object.
-The result is an OME-Zarr object with the same number of levels,
+Subset operation is applied on all levels of the multiscale \code{ome-zarr} object.
+The result is an \code{ome-zarr} object with the same number of levels,
 but each level is subsetted according to the provided indices.
 }
 \details{

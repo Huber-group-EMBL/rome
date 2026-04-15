@@ -10,9 +10,10 @@ ome_validate <- function(path, s3_client = NULL) {
   # (https://github.com/ropensci/jsonvalidate/issues/70)
   schema <- system.file(
     "extdata",
-    "ome-schemas",
+    "schemas",
     ome_version,
-    "image.schema"
+    "image.schema",
+    package = "rome"
   )
 
   jsonvalidate::json_validate(

@@ -1,3 +1,4 @@
+#' @export
 ome_validate <- function(path, s3_client = NULL) {
   group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)
   ome_version <- group_attributes$ome$version

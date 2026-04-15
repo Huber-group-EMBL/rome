@@ -1,3 +1,4 @@
+#' @importFrom utils head
 #' @export
 print.ome_zarr <- function(x, level = 1, ...) {
   cat("Multiscale OME-Zarr object.\n")

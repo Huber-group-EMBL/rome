@@ -1,4 +1,5 @@
-get_scales <- function(metadata, ome_version) {
+#' @keywords internal
+.get_scales <- function(metadata, ome_version) {
   scales <- switch(
     ome_version,
     "0.1" = ,

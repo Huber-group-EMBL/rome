@@ -1,0 +1,33 @@
+#' Extract specific levels from a multiscale OME-Zarr object
+#' 
+#' @param x An OME-Zarr object.
+#' @param levels Integer vector specifying the levels to extract.
+#' 
+#' @returns 
+#' - If `levels` is of length 1, an array
+#' - If `levels` is of length more than 1, an OME-Zarr object
+#' 
+#' @export
+#' 
+#' @examples
+#' x <- ome_read(
+#'  system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
+#' )
+#' extract_levels(x, c(1, 3))
+#' extract_levels(x, 2)
+extract_levels <- function(x, levels) {
+  stopifnot(
+    inherits(x, "ome_zarr")
+  )
+  if (any(levels < 1) || any(levels > length(x))) {
+    stop("Level must be between 1 and ", length(x))
+  }
+  x <- lapply(levels, function(level) x[[level]])
+
+  if (length(x) == 1) {
+    return(x[[1]])
+  }
+
+  class(x) <- "ome_zarr"
+  return(x)
+}

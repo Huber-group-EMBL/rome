@@ -24,7 +24,7 @@
 #'   system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
 #' )
 
-ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
+ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
 
   # FIXME: check we're in a group
   if (validate) {
@@ -36,10 +36,15 @@ ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
   scales <- .get_scales(group_attributes, ome_version)
   dim_names <- .get_dim_names(group_attributes, ome_version)
 
-  read_zarr <- if (lazy) {
-    ZarrArray::ZarrArray
-  } else {
-    Rarr::read_zarr_array
+  read_zarr <- function(path, s3_client = NULL) {
+    if (lazy) {
+      if (!is.null(s3_client)) {
+        stop("Lazy reading is not supported for S3 paths.")
+      }
+      ZarrArray::ZarrArray(path)
+    } else {
+      Rarr::read_zarr_array(path, s3_client = s3_client)
+    }
   }
 
   x <- lapply(scales$datasets, function(scale) {

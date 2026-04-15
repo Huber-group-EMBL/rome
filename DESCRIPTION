@@ -1,8 +1,10 @@
 Package: rome
 Title: Minimal R 'OME-Zarr' Reader
 Version: 0.0.0.9000
-Authors@R: 
-    person("Hugo", "Gruson", , "hugo.gruson@embl.de", role = c("aut", "cre"))
+Authors@R: c(
+    person("Hugo", "Gruson", , "hugo.gruson@embl.de", role = c("aut", "cre")),
+    person("Artür", "Manukyan", role = "ctb")
+  )
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8

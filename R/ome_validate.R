@@ -1,3 +1,11 @@
+#' Validate OME-Zarr file
+#' 
+#' @inheritParams ome_read
+#' 
+#' @returns 
+#' This function is used for its side-effect and will return an error when 
+#' passed an invalid OME-Zarr file
+#' 
 #' @export
 ome_validate <- function(path, s3_client = NULL) {
   group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)

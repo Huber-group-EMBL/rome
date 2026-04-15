@@ -8,6 +8,8 @@
 #'   may result in better performance.
 #' @param validate Logical.If `TRUE` (the default), validate the OME-Zarr file.
 #' 
+#' @export
+#' 
 #' @examples
 #' ome_read(
 #'   system.file("extdata", "ome-v0.2", "6001247.zarr", package = "rome")

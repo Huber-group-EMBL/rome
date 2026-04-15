@@ -18,5 +18,3 @@ Imports:
     jsonvalidate,
     Rarr,
     ZarrArray
-Suggests: 
-    ImageArray

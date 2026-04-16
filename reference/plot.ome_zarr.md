@@ -28,10 +28,10 @@ plot(x, level = 1, ...)
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
 x <- ome_read(
-  system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
 )
-#> Error in read_schema(schema, v8): Schema '' looks like a filename but does not exist
 plot(x)
-#> Error: object 'x' not found
+} # }
 ```

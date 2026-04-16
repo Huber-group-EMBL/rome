@@ -25,3 +25,13 @@ ome_validate(path, s3_client = NULL)
 
 This function is used for its side-effect and will return an error when
 passed an invalid OME-Zarr file
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+ome_validate(
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
+)
+} # }
+```

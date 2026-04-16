@@ -23,16 +23,9 @@ may result in better performance.}
 Read a multiscale OME-Zarr file
 }
 \examples{
-ome_read(
-  system.file("extdata", "ome-v0.2", "6001247.zarr", package = "rome"),
-  validate = FALSE
-)
-
-ome_read(
- system.file("extdata", "ome-v0.3", "9528933.zarr", package = "rome")
-)
-
+\dontrun{
 x <- ome_read(
-  system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
 )
+}
 }

@@ -7,6 +7,13 @@
 #' passed an invalid OME-Zarr file
 #' 
 #' @export
+#' 
+#' @examples
+#' \dontrun{
+#' ome_validate(
+#'   "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
+#' )
+#' }
 ome_validate <- function(path, s3_client = NULL) {
   group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)
   ome_version <- group_attributes$ome$version

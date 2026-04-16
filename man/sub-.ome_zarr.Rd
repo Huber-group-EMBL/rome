@@ -22,11 +22,13 @@ resulting dimensions are used to subset the remaining levels, while
 conserving the same scaling factor across levels
 }
 \examples{
+\dontrun{
 x <- ome_read(
-  system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
 )
 y <- x[3, 1:5, 1:5]
 extract_levels(y, 2)
 plot(y, level = 2)
+}
 
 }

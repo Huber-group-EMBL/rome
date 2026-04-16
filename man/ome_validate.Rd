@@ -19,3 +19,10 @@ passed an invalid OME-Zarr file
 \description{
 Validate a multiscale OME-Zarr file
 }
+\examples{
+\dontrun{
+ome_validate(
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
+)
+}
+}

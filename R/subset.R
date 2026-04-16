@@ -14,12 +14,14 @@
 #' @export
 #' 
 #' @examples
+#' \dontrun{
 #' x <- ome_read(
-#'   system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
+#'   "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
 #' )
 #' y <- x[3, 1:5, 1:5]
 #' extract_levels(y, 2)
 #' plot(y, level = 2)
+#' }
 #' 
 `[.ome_zarr` <- function(x, ...) {
   x <- lapply(x, function(layer) {

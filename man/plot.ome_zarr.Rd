@@ -17,9 +17,11 @@
 Plot an \code{ome_zarr} object.
 }
 \examples{
+\dontrun{
 x <- ome_read(
-  system.file("extdata", "ome-v0.4", "10501752.zarr", package = "rome")
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
 )
 plot(x)
+}
 
 }

@@ -50,7 +50,8 @@ s3_client <- paws.storage::s3(
   )
 )
 x <- ome_read(
-  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr", s3_client = s3_client, lazy = TRUE
+  "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr", 
+  s3_client = s3_client, lazy = TRUE
 )
 plot(x, all = TRUE)
 ```

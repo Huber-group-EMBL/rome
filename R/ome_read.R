@@ -18,7 +18,7 @@
 #' )
 #' }
 ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
-  
+
   # FIXME: check we're in a group
   if (validate) {
     ome_validate(path, s3_client = s3_client)

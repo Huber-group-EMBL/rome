@@ -6,3 +6,4 @@ inst/extdata/ome-*
 .Rhistory
 .RData
 .Ruserdata
+*.Rproj

@@ -2,3 +2,8 @@
 **/*.quarto_ipynb
 docs
 inst/extdata/ome-*
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj

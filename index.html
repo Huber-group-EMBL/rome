@@ -66,8 +66,16 @@
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rome/">rome</a></span><span class="op">)</span></span>
+<span><span class="va">s3_client</span> <span class="op">&lt;-</span> <span class="fu">paws.storage</span><span class="fu">::</span><span class="fu"><a href="https://paws-r.r-universe.dev/paws.storage/reference/s3.html" class="external-link">s3</a></span><span class="op">(</span></span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    credentials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>anonymous <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    region <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>    endpoint <span class="op">=</span> <span class="st">"https://uk1s3.embassy.ebi.ac.uk"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ome_read.html">ome_read</a></span><span class="op">(</span></span>
-<span>  <span class="st">"https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"</span></span>
+<span>  <span class="st">"https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"</span>, </span>
+<span>  s3_client <span class="op">=</span> <span class="va">s3_client</span>, lazy <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" style="width:100.0%"></p>

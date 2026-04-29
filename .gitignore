@@ -7,3 +7,4 @@ inst/extdata/ome-*
 .RData
 .Ruserdata
 *.Rproj
+.DS_Store

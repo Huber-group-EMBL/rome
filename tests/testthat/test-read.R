@@ -4,6 +4,7 @@ library(withr)
 # TODO: v0.2 throws the following error:
 # Error in read_schema_dependencies(schema, children, c(file_path, parent),  : 
 #   Don't yet support protocol-based sub schemas
+# yes, remote schemas we cannot use ... should we have local copys of all ?
 format <- c(
   "0.1" = "v01",
   # "0.2" = "v02",
@@ -26,10 +27,12 @@ test_that("parse ome version", {
     x <- ome_read(td)
     # TODO: why S3 ? 
     expect_s3_class(x, "ome_zarr")
+    expect_equal(attr(x, "Image"))
     
     # labels
     x <- ome_read(file.path(td, "labels/blobs"))
     # TODO: why S3 ? 
     expect_s3_class(x, "ome_zarr")
+    expect_equal(attr(x, "Labels"))
   }
 })

@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(Rarr)
+library(rome)
 
-test_check("Rarr")
+test_check("rome")

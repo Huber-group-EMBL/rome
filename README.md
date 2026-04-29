@@ -26,7 +26,7 @@ You can install the development version of rome like so:
 pak::pak("Huber-group-EMBL/rome")
 ```
 
-## Example
+## Image
 
 This is a basic example which shows you how to read a OME-ZARR image of
 version 0.4:
@@ -58,3 +58,19 @@ x <- ome_read(
 )
 plot(x, all = TRUE)
 ```
+
+## Labels
+
+Labels of image pyramids can also be read as images
+
+``` r
+library(rome)
+library(utils)
+omezarrzip <- system.file("extdata", "test_ngff_image_v04.ome.zarr.zip", package = "rome")
+dir.create(td <- tempfile())
+unzip(omezarrzip, exdir = td)
+x <- ome_read(file.path(td, "labels/blobs"))
+plot(x, all = TRUE)
+```
+
+<img src="man/figures/README-read_label-1.png" style="width:100.0%" />

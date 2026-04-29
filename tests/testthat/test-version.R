@@ -1,4 +1,3 @@
-library(rome)
 library(utils)
 
 test_that("parse ome version", {

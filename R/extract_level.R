@@ -1,14 +1,14 @@
 #' Extract specific levels from a multiscale `ome-zarr` object
-#' 
+#'
 #' @param x An `ome-zarr` object.
 #' @param levels Integer vector specifying the levels to extract.
-#' 
-#' @returns 
+#'
+#' @returns
 #' - If `levels` is of length 1, an array
 #' - If `levels` is of length more than 1, an `ome-zarr` object
-#' 
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' x <- ome_read(

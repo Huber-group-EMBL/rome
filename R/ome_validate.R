@@ -1,13 +1,13 @@
 #' Validate a multiscale OME-Zarr file
-#' 
+#'
 #' @inheritParams ome_read
-#' 
-#' @returns 
-#' This function is used for its side-effect and will return an error when 
+#'
+#' @returns
+#' This function is used for its side-effect and will return an error when
 #' passed an invalid OME-Zarr file
-#' 
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' ome_validate(
@@ -18,7 +18,7 @@ ome_validate <- function(path, s3_client = NULL) {
   group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)
   ome_version <- .get_version(group_attributes)
 
-  # We cannot download the schemas on the fly because we patch them to use local references 
+  # We cannot download the schemas on the fly because we patch them to use local references
   # as jsonvalidate doesn't support remote references
   # (https://github.com/ropensci/jsonvalidate/issues/70)
   schema <- system.file(

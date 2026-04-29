@@ -7,3 +7,5 @@
 ^pkgdown$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^[.]?air[.]toml$
+^\.vscode$

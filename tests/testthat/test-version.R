@@ -12,7 +12,7 @@ test_that("parse ome version", {
                                      format[i],
                                      ".ome.zarr.zip"), 
                               package = "rome")
-    dir.create(td <- tempfile())
+    td <- withr::local_tempfile()
     unzip(omezarrzip, exdir = td)
     print(.get_version(Rarr::read_zarr_attributes(td)))
     expect_equal(

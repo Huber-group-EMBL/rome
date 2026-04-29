@@ -18,5 +18,8 @@ Imports:
     jsonvalidate,
     Rarr,
     ZarrArray
+Suggests:
+    utils,
+    testthat
 URL: https://huber-group-embl.github.io/rome/, https://github.com/Huber-group-EMBL/rome
 BugReports: https://github.com/Huber-group-EMBL/rome/issues

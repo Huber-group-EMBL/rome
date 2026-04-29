@@ -103,7 +103,7 @@ Labels of image pyramids can also be read as images
 ``` r
 library(rome)
 library(utils)
-omezarrzip <- system.file("extdata", "test_ngff_image_v05.ome.zarr.zip", package = "rome")
+omezarrzip <- system.file("extdata", "test_ngff_image_v04.ome.zarr.zip", package = "rome")
 dir.create(td <- tempfile())
 unzip(omezarrzip, exdir = td)
 x <- ome_read(file.path(td, "labels/blobs"))

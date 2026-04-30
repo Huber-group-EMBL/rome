@@ -6,11 +6,11 @@ library(withr)
 #   Don't yet support protocol-based sub schemas
 # yes, remote schemas we cannot use ... should we have local copys of all ?
 format <- c(
-  # "0.1" = "v01",
+  "0.1" = "v01",
   # "0.2" = "v02",
-  "0.3" = "v03"
-  # "0.4" = "v04",
-  # "0.5" = "v05"
+  "0.3" = "v03",
+  "0.4" = "v04",
+  "0.5" = "v05"
 )
 
 test_that("parse ome version", {

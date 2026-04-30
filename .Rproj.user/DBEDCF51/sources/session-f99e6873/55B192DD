@@ -1,0 +1,26 @@
+{
+    "id": "55B192DD",
+    "path": "~/Dropbox/Research/MDC/Projects/SpatialData/Packages/rome/R/ome_validate.R",
+    "project_path": "R/ome_validate.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1777495571375.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "37,1",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1777545384,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1777545384,
+    "read_only": false,
+    "read_only_alternatives": []
+}

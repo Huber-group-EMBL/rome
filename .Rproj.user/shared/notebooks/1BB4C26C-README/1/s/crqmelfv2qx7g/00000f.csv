@@ -1,0 +1,8 @@
+"0","#| label: read"
+"0","library(rome)"
+"0","library(utils)"
+"0","omezarrzip <- system.file(""extdata"", ""test_ngff_image_v04.ome.zarr.zip"", package = ""rome"")"
+"0","dir.create(td <- tempfile())"
+"0","unzip(omezarrzip, exdir = td)"
+"0","x <- ome_read(td)"
+"0","plot(x, all = TRUE)"

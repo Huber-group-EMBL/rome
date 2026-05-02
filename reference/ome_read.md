@@ -5,7 +5,7 @@ Read a multiscale OME-Zarr file
 ## Usage
 
 ``` r
-ome_read(path, s3_client = NULL, lazy = FALSE, validate = TRUE)
+ome_read(path, s3_client = NULL, lazy = TRUE, validate = TRUE)
 ```
 
 ## Arguments

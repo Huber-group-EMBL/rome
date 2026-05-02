@@ -13,6 +13,7 @@ multiscale OME-Zarr object.
 You can install the development version of rome like so:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("Huber-group-EMBL/rome")
 ```
@@ -20,9 +21,11 @@ pak::pak("Huber-group-EMBL/rome")
 ## Example
 
 This is a basic example which shows you how to read a OME-ZARR image of
-version 0.4:
+version 0.4. By default, the read will be performed lazily using
+`ZarrArray`.
 
 ``` r
+
 library(rome)
 library(utils)
 omezarrzip <- system.file("extdata", "test_ngff_image_v04.ome.zarr.zip", package = "rome")
@@ -37,6 +40,7 @@ client to read the data directly from the S3 bucket without downloading
 it first:
 
 ``` r
+
 library(paws)
 s3_client <- paws.storage::s3(
   config = list(
@@ -47,7 +51,7 @@ s3_client <- paws.storage::s3(
 )
 x <- ome_read(
   "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr", 
-  s3_client = s3_client, lazy = TRUE
+  s3_client = s3_client,
 )
 plot(x, all = TRUE)
 ```

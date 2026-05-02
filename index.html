@@ -63,7 +63,7 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to read a OME-ZARR image of version 0.4:</p>
+<p>This is a basic example which shows you how to read a OME-ZARR image of version 0.4. By default, the read will be performed lazily using <code>ZarrArray</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rome/">rome</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">utils</span><span class="op">)</span></span>
@@ -83,7 +83,7 @@
 <span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ome_read.html">ome_read</a></span><span class="op">(</span></span>
 <span>  <span class="st">"https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"</span>, </span>
-<span>  s3_client <span class="op">=</span> <span class="va">s3_client</span>, lazy <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  s3_client <span class="op">=</span> <span class="va">s3_client</span>,</span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>

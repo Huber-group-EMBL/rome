@@ -16,9 +16,7 @@ test_that("parse ome version", {
     )
     td <- withr::local_tempfile()
     unzip(omezarrzip, exdir = td)
-    print(.get_version(Rarr::read_zarr_attributes(td)))
-    expect
-    identical(
+    expect_identical(
       .get_version(Rarr::read_zarr_attributes(td)),
       names(format)[i]
     )

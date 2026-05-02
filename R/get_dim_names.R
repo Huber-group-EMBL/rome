@@ -9,6 +9,12 @@
       vapply(function(axis) axis$name, character(1)),
     "0.5" = metadata$ome$multiscales[[1]]$axes |>
       vapply(function(axis) axis$name, character(1)),
+    "0.1-sd-raster" = metadata$multiscales[[1]]$axes |>
+      vapply(function(axis) axis$name, character(1)),
+    "0.2-sd-raster" = metadata$ome$multiscales[[1]]$axes |>
+      vapply(function(axis) axis$name, character(1)),
+    "0.3-sd-raster" = metadata$ome$multiscales[[1]]$axes |>
+      vapply(function(axis) axis$name, character(1)),
     stop("Unsupported OME version: ", ome_version)
   )
   return(dim_names)

@@ -85,4 +85,18 @@ x <- ome_read(file.path(td, "labels/blobs"))
 plot(x, all = TRUE)
 ```
 
+## SpatialData
+
+In order to validate and read OME-ZARR-like images and labels from SpatialData 
+objects.
+
+```{r sd}
+#| label: sd
+library(SpatialData)
+library(SpatialData.validate)
+path <- system.file("extdata", "blobs_v3.zarr", package="SpatialData")
+ome_read(file.path(path, "images/blobs_multiscale_image/"))
+```
+
+
 

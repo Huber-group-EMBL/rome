@@ -3,5 +3,4 @@
 .Ruserdata
 *.Rproj
 .DS_Store
-.Rproj.user/*
-.Rproj.user
+.Rproj.user/

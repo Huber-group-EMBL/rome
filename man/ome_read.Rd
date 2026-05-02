@@ -4,7 +4,7 @@
 \alias{ome_read}
 \title{Read a multiscale OME-Zarr file}
 \usage{
-ome_read(path, s3_client = NULL, lazy = FALSE, validate = TRUE)
+ome_read(path, s3_client = NULL, lazy = TRUE, validate = TRUE)
 }
 \arguments{
 \item{path}{Path to the OME-Zarr file.}

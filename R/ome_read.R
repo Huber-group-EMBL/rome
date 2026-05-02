@@ -17,7 +17,7 @@
 #'   "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr"
 #' )
 #' }
-ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
+ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
   # FIXME: check we're in a group
   type <- if (validate) {
     ome_validate(path, s3_client = s3_client)
@@ -30,7 +30,7 @@ ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
   scales <- .get_scales(group_attributes, ome_version)
   dim_names <- .get_dim_names(group_attributes, ome_version)
 
-  .read_zarr <- function(path, s3_client = NULL, lazy = FALSE) {
+  .read_zarr <- function(path, s3_client = NULL, lazy = TRUE) {
     if (lazy) {
       ZarrArray::ZarrArray(path, s3_client = s3_client)
     } else {
@@ -39,7 +39,9 @@ ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
   }
 
   x <- lapply(scales$datasets, function(scale) {
-    img <- .read_zarr(file.path(path, scale$path), s3_client = s3_client)
+    img <- .read_zarr(file.path(path, scale$path), 
+                      lazy = TRUE, 
+                      s3_client = s3_client)
     if (!is.null(dim_names)) {
       dimnames(img) <- setNames(
         vector("list", length = length(dim(img))),

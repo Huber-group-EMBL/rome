@@ -37,7 +37,8 @@ pak::pak("Huber-group-EMBL/rome")
 
 ## Image
 
-This is a basic example which shows you how to read a OME-ZARR image of version 0.4:
+This is a basic example which shows you how to read a OME-ZARR image of version 0.4. 
+By default, the read will be performed lazily using `ZarrArray`. 
 
 ```{r read}
 #| label: read
@@ -48,6 +49,13 @@ dir.create(td <- tempfile())
 unzip(omezarrzip, exdir = td)
 x <- ome_read(td)
 x
+```
+
+Otherwise the read can be performed in memory as:
+
+```{r read_lazy}
+#| label: read_lazy
+x <- ome_read(td, lazy = FALSE)
 ```
 
 For remote OME-ZARR files, you can use the `paws.storage::s3` client to read the data directly from the S3 bucket without downloading it first:
@@ -65,7 +73,7 @@ s3_client <- paws.storage::s3(
 )
 x <- ome_read(
   "https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0076A/10501752.zarr", 
-  s3_client = s3_client, lazy = TRUE
+  s3_client = s3_client,
 )
 plot(x, all = TRUE)
 ```

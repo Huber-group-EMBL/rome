@@ -41,7 +41,7 @@ This is a basic example which shows you how to read a OME-ZARR image of version 
 
 ```{r read}
 #| label: read
-library(rome)
+# library(rome)
 library(utils)
 omezarrzip <- system.file("extdata", "test_ngff_image_v04.ome.zarr.zip", package = "rome")
 dir.create(td <- tempfile())
@@ -76,7 +76,7 @@ Labels of image pyramids can also be read as images
 
 ```{r read_label}
 #| label: read_label
-library(rome)
+# library(rome)
 library(utils)
 omezarrzip <- system.file("extdata", "test_ngff_image_v04.ome.zarr.zip", package = "rome")
 dir.create(td <- tempfile())

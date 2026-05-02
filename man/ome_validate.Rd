@@ -4,16 +4,17 @@
 \alias{ome_validate}
 \title{Validate a multiscale OME-Zarr file}
 \usage{
-ome_validate(path, s3_client = NULL)
+ome_validate(group_attributes, s3_client = NULL)
 }
 \arguments{
-\item{path}{Path to the OME-Zarr file.}
+\item{group_attributes}{attributes of the group}
 
 \item{s3_client}{Object created by \code{\link[paws.storage:s3]{paws.storage::s3()}}. Only required for a
 file on S3. Leave as \code{NULL} for a file on local storage.}
 }
 \value{
-This function is used for its side-effect and will return an error when
+This function is used for its side-effect and will return the type of the
+OME-Zarr schema (image, label), otherwise will invoke an error when
 passed an invalid OME-Zarr file
 }
 \description{

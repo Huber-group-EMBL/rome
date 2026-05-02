@@ -18,14 +18,19 @@
 #' )
 #' }
 ome_read <- function(path, s3_client = NULL, lazy = FALSE, validate = TRUE) {
+  
   # FIXME: check we're in a group
+  group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)
   type <- if (validate) {
-    ome_validate(path, s3_client = s3_client)
+    if("spatialdata_attrs" %in% names(group_attributes)){
+      sd_validate(group_attributes, s3_client = s3_client)
+    } else {
+      ome_validate(group_attributes, s3_client = s3_client) 
+    }
   } else {
     "Unknown"
   }
 
-  group_attributes <- Rarr::read_zarr_attributes(path, s3_client = s3_client)
   ome_version <- .get_version(group_attributes)
   scales <- .get_scales(group_attributes, ome_version)
   dim_names <- .get_dim_names(group_attributes, ome_version)

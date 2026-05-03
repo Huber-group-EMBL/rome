@@ -1,48 +1,52 @@
 
-#' write_image
+#' ome_write
 #' 
-#' Writes an image to the zarr store according to ome-zarr specification
+#' Writes an ome image to the zarr path according to ome-zarr specification
 #'
 #' @param image an n-dimensional (1<n<6) array representing the image data 
-#' @param group the zarr group to write the image to
+#' @param path the zarr path to write the image to
 #' @param axes a character vector specifying the axes of the image 
 #' (e.g. c("t", "c", "z", "y", "x"))
-#' @param scalefactor Scaler implementation for downsampling the image argument. 
-#' If None, no downsampling will be performed.
-#' @param max_layer Maximum number of layers in the image pyramid
-#' @param version OME-ZARR format (v0.4 or v0.5)
+#' @param scalefactors Scale factors to apply to construct a multiscale image. 
+#' Importantly, each scale factor is relative to the previous scale factor. 
+#' For example, if the scale factors are c(2, 2, 2), the returned multiscale 
+#' image will have 4 scales.
+#' @param version OME-ZARR format (0.4 or 0.5), lower versions are not supported
+#' for writing.
 #' @param storage_options a list of storage options for the zarr array 
 #' (e.g. chunks)
 #'
-#' @rdname write_image
+#' @rdname ome_write
 #' 
 #' @importFrom stats setNames
 #' 
 #' @export
-write_image <- function(image, 
-                        group="/", 
-                        axes = NULL,  
-                        scalefactor = 2,
-                        max_layer = 5,
-                        version = "v0.4", # for now, we can only do zarr v2
-                        storage_options = NULL){
+ome_write <- function(image, 
+                      path="/", 
+                      axes = NULL,  
+                      scalefactors = c(2,2,2,2),
+                      version = c("0.4", "0.5"),
+                      storage_options = NULL){
   
   # Generate a downsampled pyramid of images.
-  image_pyramid <- .create_mip(image, version, scalefactor, axes)
+  image_pyramid <- .create_mip(image, version, scalefactors, axes)
   
   # write image
   .write_multiscale_image(image_pyramid = image_pyramid, 
-                          group = group, 
+                          path = path, 
                           axes = axes, 
                           format = version, 
                           storage_options = storage_options)
   
   # write ome metadata 
-  write_ome_metadata(group = group, image = image, 
-                     version = version, axes = axes)
+  .write_ome_metadata(path = path, 
+                     image = image,
+                     scalefactors = scalefactors,
+                     version = version, 
+                     axes = axes)
   
   # return
-  read_image(group = group)
+  ome_read(path = path)
 }
 
 #' .create_mip
@@ -51,14 +55,13 @@ write_image <- function(image,
 #'
 #' @importFrom EBImage resize
 #' 
-#' @inheritParams write_image
+#' @inheritParams ome_write
 #' 
 #' @noRd
 .create_mip <- function(image,
                         format,
-                        scalefactor = 2,
-                        axes, 
-                        max_layer = 5){
+                        scalefactors,
+                        axes){
   
   
   # check dim
@@ -85,17 +88,15 @@ write_image <- function(image,
   
   # downscale image
   image_list <- list(image)
-  if (max_layer > 1) {
-    cur_image <- aperm(image, 
-                       perm = rev(seq_len(length(axes))))
-    for (i in 2:max_layer) {
-      dim_image <- ceiling(dim_image / scalefactor)
-      image_list[[i]] <- 
-        aperm(EBImage::resize(cur_image,
-                              w = dim_image[1],
-                              h = dim_image[2]), 
-              perm = rev(seq_len(length(axes))))
-    }
+  cur_image <- aperm(image, 
+                     perm = rev(seq_len(length(axes))))
+  for (i in seq_along(scalefactors)) {
+    dim_image <- ceiling(dim_image / scalefactors[i])
+    image_list[[i+1]] <- 
+      aperm(EBImage::resize(cur_image,
+                            w = dim_image[1],
+                            h = dim_image[2]), 
+            perm = rev(seq_len(length(axes))))
   }
   
   image_list
@@ -105,30 +106,31 @@ write_image <- function(image,
 #' 
 #' Write a pyramid with multiscale metadata to disk.
 #'
-#' @inheritParams write_image
+#' @inheritParams ome_write
 #' 
 #' @noRd
 .write_multiscale_image <- function(image_pyramid,
-                                    group,
+                                    path,
                                     axes,
                                     format,
                                     storage_options){
   
   # create zarr
-  if(!zarr_path_exists(group, target_path = "/"))
-    create_zarr(store = group, 
-                version = if(format == "v0.4") "v2" else "v3")
+  if(!zarr_path_exists(path, target_path = "/"))
+    create_zarr(store = path, 
+                version = if(format == "0.4") "2" else "3")
   
   # check storage options
   if(!"chunk_dim" %in% names(storage_options))
     stop("'chunk_dim' must be provided in storage_options")
   
   # write multiscale image
+  # TODO: how can we do this optimal for each scale/layer
   for(i in seq_len(length(image_pyramid))){
     image <- image_pyramid[[i]]
     Rarr::write_zarr_array(
       x = image_pyramid[[i]],
-      zarr_array_path = paste(group, paste0(i-1), sep = "/"),
+      zarr_array_path = paste(path, paste0(i-1), sep = "/"),
       chunk_dim = .get_scale_chunk_dim(
         chunk_dim = storage_options$chunk_dim,
         dim = dim(image)

@@ -1,13 +1,10 @@
-write_ome_metadata <- function(group, 
+#' @noRd
+.write_ome_metadata <- function(path, 
                                image,
-                               name = "",
-                               version = "0.4",
-                               axes = NULL,
-                               type,
-                               channel_labels, 
-                               downscaling_metadata = NULL,
-                               omero = FALSE){
-  
+                               scalefactors,
+                               version = c("0.4", "0.5"),
+                               axes = NULL) {
+
   # for now we only do version 0.4 due to Rarr only supporting v2
   # see https://ngff.openmicroscopy.org/0.4/index.html#multiscale-md
   
@@ -19,50 +16,45 @@ write_ome_metadata <- function(group,
   v <- "version"
   n <- "name"
 
-  # version
-  meta[[v]] <-  version
+  # check version
+  if(!version %in% c("0.4", "0.5"))
+    stop("Writing support is only available for OME versions 0.4 and 0.5!")
   
-  # name
-  meta[[n]] <- name
+  # version
+  if(version == "0.4"){
+    meta[[v]] <-  version 
+  }
   
   # axis
   axes <- .get_valid_axes(image, axes)
   meta[[ax]] <- .make_axes_meta(axes)
   
   # coordinate transformations
-  meta[[ct]] <- .make_empty_ct(x, axes)
+  meta[[ct]] <- .make_empty_ct(axes)
   
   # datasets 
-  meta[[ds]] <- .make_datasets(x, axes)
-  
-  # type 
-  meta[["type"]] <- "image"
-  
-  # metadata
-  if(is.null(downscaling_metadata))
-    meta[[mt]] <- downscaling_metadata
+  meta[[ds]] <- .make_datasets(scalefactors, axes)
   
   # multiscales
-  meta <- list(multiscales = list(meta))
-  
-  # omero 
-  if(omero)
-    meta <- c(meta, 
-              list(
-                omero = .make_omero_meta(x, axes)
-                )
-              )
+  meta <- list(multiscales = list(meta)) 
+  if(version == "0.5"){
+    meta <- list(
+      ome = c(meta, 
+              list(version = version))
+    )
+  }
   
   # update json list
-  Rarr::write_zarr_attributes(zarr_path = group, 
-                              new.zattrs = meta)
+  Rarr::write_zarr_attributes(zarr_path = path, 
+                              new.zattrs = meta, 
+                              overwrite = TRUE)
 }
 
 #' .get_valid_axes
 #' 
 #' Get validated axes
 #'
-#' @inheritParams write_image
+#' @inheritParams ome_write
 #' 
 #' @noRd
 .get_valid_axes <- function(
@@ -112,17 +104,20 @@ write_ome_metadata <- function(group,
   axes
 }
 
-.make_axes_meta <- function(x){
+#' @noRd
+.make_axes_meta <- function(axes){
   .DEFAULT_AXES[
     vapply(.DEFAULT_AXES, 
-           \(.) .$name %in% x, 
+           \(.) .$name %in% axes, 
            logical(1))
   ]
 }
 
-.make_datasets <- function(x, axes){
-  paths <- paste0(seq_len(length(x)) - 1)
-  mapply(\(p) {
+#' @noRd
+.make_datasets <- function(scalefactors, axes){
+  paths <- paste0(seq_len(length(scalefactors)+1)-1)
+  scalefactors <- c(1,cumprod(scalefactors))
+  mapply(\(p, s) {
     list(
       coordinateTransformations = list(
         list(
@@ -131,17 +126,18 @@ write_ome_metadata <- function(group,
               1
             } else if(. =="t") {
               0.1 
-            } else (2^as.numeric(p))
+            } else as.numeric(s)
           }, numeric(1)),
           type = "scale" 
         )
       ), 
       path = p
     )
-  }, paths, USE.NAMES = FALSE, SIMPLIFY = FALSE)
+  }, paths, scalefactors, USE.NAMES = FALSE, SIMPLIFY = FALSE)
 }
 
-.make_empty_ct <- function(x, axes){
+#' @noRd
+.make_empty_ct <- function(axes){
   list(
     list(
       scale = vapply(axes, \(.){

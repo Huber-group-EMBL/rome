@@ -76,3 +76,32 @@ x <- ome_read(
 )
 plot(x, all = TRUE)
 ```
+
+## Write Image
+
+
+```{r write}
+#| label: write
+# read image
+library(EBImage)
+img_file <- system.file("images", "sample.png", package="EBImage")
+img_array <- readImage(img_file)
+
+# zarr store
+store <- tempfile(fileext = ".ome.zarr")
+
+# write image
+img_pyramid <- ome_write(img_array,
+                         path = store,
+                         version = "0.4",
+                         storage_options = list(chunk_dim = c(64,64)))
+
+# zarr store
+store <- tempfile(fileext = ".ome.zarr")
+
+# write image
+ome_write(img_array,
+          path = store,
+          version = "0.5",
+          storage_options = list(chunk_dim = c(64,64)))
+```

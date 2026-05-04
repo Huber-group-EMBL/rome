@@ -55,16 +55,17 @@ for v, fmt in versions.items():
         scale_factors=[2, 4]
     )
     
-    # write labels
-    root = zarr.open_group(path, mode="a", zarr_format = fmt.zarr_format)
-    write_labels(
-      blobs, 
-      path, 
-      axes="cyx", 
-      name="blobs", 
-      fmt=fmt,
-      scale_factors=[2, 4]
-    )
+    # write labels, version 0.1 and 0.3 do not have label.schema
+    if fmt not in ["01", "03"]:
+      root = zarr.open_group(path, mode="a", zarr_format = fmt.zarr_format)
+      write_labels(
+        blobs, 
+        path, 
+        axes="cyx", 
+        name="blobs", 
+        fmt=fmt,
+        scale_factors=[2, 4]
+      )
 
     # zip files
     zip_path = f"{path}.zip"

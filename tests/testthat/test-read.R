@@ -27,12 +27,14 @@ test_that("parse ome version", {
     x <- ome_read(td)
     # TODO: why S3 ? 
     expect_s3_class(x, "ome_zarr")
-    expect_equal(attr(x, "type"), "Image")
+    expect_equal(attr(x, "type"), "image")
     
-    # labels
-    x <- ome_read(file.path(td, "labels/blobs"))
-    # TODO: why S3 ? 
-    expect_s3_class(x, "ome_zarr")
-    expect_equal(attr(x, "type"), "Labels")
+    # labels, version 0.1 and 0.3 do not have label.schema
+    if(format[i] %in% c("0.1", "0.3")){
+      x <- ome_read(file.path(td, "labels/blobs"))
+      # TODO: why S3 ? 
+      expect_s3_class(x, "ome_zarr")
+      expect_equal(attr(x, "type"), "label")
+    }
   }
 })

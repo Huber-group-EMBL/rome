@@ -23,12 +23,24 @@ ome_validate <- function(path, s3_client = NULL) {
   # as jsonvalidate doesn't support remote references
   # (https://github.com/ropensci/jsonvalidate/issues/70)
   
+  type <- 
+    if(
+    "image-label" %in% 
+    names(
+      if(is.null(ome <- group_attributes$ome)) group_attributes else ome 
+    )
+  ){
+    "label"
+    } else {
+    "image"
+  }
+  
   # validate multiscale image/label
   schema <- system.file(
     "extdata",
     "schemas",
     ome_version,
-    "image.schema",
+    paste0(type, ".schema"),
     package = "rome"
   )
   jsonvalidate::json_validate(
@@ -37,42 +49,6 @@ ome_validate <- function(path, s3_client = NULL) {
     engine = "ajv",
     error = TRUE
   )
-  
-  # validate label
-  type <- tryCatch({
-    # check if "image-label" is present
-    stopifnot(
-      "image-label" %in% 
-        names(
-          if(is.null(ome <- group_attributes$ome)) group_attributes else ome 
-        )
-    )
-    
-    # check labels.schema and validate if exists
-    schema <- tryCatch({
-      system.file(
-        "extdata",
-        "schemas",
-        ome_version,
-        "label.schema",
-        package = "rome", 
-        mustWork = TRUE
-      )
-    }, error = function(e){
-      NULL
-    })
-    if(!is.null(schema)){
-      jsonvalidate::json_validate(
-        jsonlite::toJSON(group_attributes, auto_unbox = TRUE),
-        schema,
-        engine = "ajv",
-        error = TRUE
-      ) 
-    }
-    "Labels"
-  }, error = function(e) {
-    "Image"
-  })
   
   type
 }

@@ -68,45 +68,32 @@ plot(x, all = TRUE)
 
 ## Write Image
 
+rome also provides utilities for writing OME-ZARR images for OME-NGFF
+versions 0.4 and 0.5.
+
 ``` r
 # read image
 library(EBImage)
 img_file <- system.file("images", "sample.png", package="EBImage")
-img_array <- readImage(img_file)
+img <- readImage(img_file)
 
-# zarr store
-store <- tempfile(fileext = ".ome.zarr")
+# write image, version 0.4
+ome_img <- ome_write(img,
+                     path = tempfile(fileext = ".ome.zarr"),
+                     version = "0.4",
+                     storage_options = list(chunk_dim = c(64,64)))
+```
 
-# write image
-ome_write(img_array,
-          path = store,
-          version = "0.4",
-          storage_options = list(chunk_dim = c(64,64)))
-#> Multiscale OME-Zarr object.
-#> Scale: 1/5 
-#> <5 x 5> DelayedMatrix object of type "double":
-#>           [,1]      [,2]      [,3]      [,4]      [,5]
-#> [1,] 0.4470588 0.4627451 0.4784314 0.4980392 0.5137255
-#> [2,] 0.4509804 0.4627451 0.4784314 0.4823529 0.5058824
-#> [3,] 0.4627451 0.4666667 0.4823529 0.4980392 0.5137255
-#> [4,] 0.4549020 0.4666667 0.4862745 0.4980392 0.5176471
-#> [5,] 0.4627451 0.4627451 0.4823529 0.4980392 0.5137255
+Users can also define there own scaling factors for the image pyramids.
+For a `scalefactors` with length three, the pyramid will have four
+scales. Eac scale factor in the vector defines the scale factor relative
+to the previous scale.
 
-# zarr store
-store <- tempfile(fileext = ".ome.zarr")
-
-# write image
-ome_write(img_array,
-          path = store,
-          version = "0.5",
-          storage_options = list(chunk_dim = c(64,64)))
-#> Multiscale OME-Zarr object.
-#> Scale: 1/5 
-#> <5 x 5> DelayedMatrix object of type "double":
-#>           [,1]      [,2]      [,3]      [,4]      [,5]
-#> [1,] 0.4470588 0.4627451 0.4784314 0.4980392 0.5137255
-#> [2,] 0.4509804 0.4627451 0.4784314 0.4823529 0.5058824
-#> [3,] 0.4627451 0.4666667 0.4823529 0.4980392 0.5137255
-#> [4,] 0.4549020 0.4666667 0.4862745 0.4980392 0.5176471
-#> [5,] 0.4627451 0.4627451 0.4823529 0.4980392 0.5137255
+``` r
+# write image, version 0.5
+ome_img <- ome_write(img,
+                     path = tempfile(fileext = ".ome.zarr"),
+                     version = "0.5", 
+                     scalefactors = c(2,2,3),
+                     storage_options = list(chunk_dim = c(64,64)))
 ```

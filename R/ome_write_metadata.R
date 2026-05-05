@@ -151,3 +151,15 @@
     )
   )
 }
+
+.check_scalefactors <- function(sf){
+  msg <- "scale factors should be non-NA values higher than 1."
+  if(anyNA(sf))
+    stop(msg)
+  if(length(sf) < 1)
+    stop(msg)
+  if(any(!is.numeric(sf)))
+    stop(msg)
+  if(any(sf < 1))
+    stop(msg)
+}

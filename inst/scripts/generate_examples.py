@@ -1,7 +1,7 @@
 # /// script
 # requires-python = "==3.13.0"
 # dependencies = [
-#   "ome-zarr==0.13.0",
+#   "ome-zarr==0.14.0",
 #   "scikit-image==0.26.0"
 # ]
 # ///
@@ -46,13 +46,20 @@ for v, fmt in versions.items():
     if os.path.exists(path) and os.path.isdir(path):
         shutil.rmtree(path)
 
+    # ome-zarr==0.13.0 scaling method
+    # Scaler(
+    #       downscale=2,
+    #       max_layer=2,      
+    #       method="local_mean"
+    # )
+    
     # write image
     write_image(
         data,
         path,
         axes=['c', 'y', 'x'],
         fmt=fmt,
-        scale_factors=[2, 4]
+        scale_factors=(2,4,8,16)
     )
     
     # write labels, version 0.1 and 0.3 do not have label.schema
@@ -64,7 +71,7 @@ for v, fmt in versions.items():
         axes="cyx", 
         name="blobs", 
         fmt=fmt,
-        scale_factors=[2, 4]
+        scale_factors=(2,4,8,16)
       )
 
     # zip files

@@ -1,0 +1,165 @@
+#' @noRd
+.write_ome_metadata <- function(path, 
+                               image,
+                               scalefactors,
+                               version = c("0.4", "0.5"),
+                               axes = NULL) {
+
+  # for now we only do version 0.4 due to Rarr only supporting v2
+  # see https://ngff.openmicroscopy.org/0.4/index.html#multiscale-md
+  
+  meta <- list()
+  ax <- "axes"
+  ct <- "coordinateTransformations"
+  ds <- "datasets"
+  mt <- "metadata"
+  v <- "version"
+  n <- "name"
+
+  # check version
+  if(!version %in% c("0.4", "0.5"))
+    stop("Writing support is only available for OME versions 0.4 and 0.5!")
+  
+  # version
+  if(version == "0.4"){
+    meta[[v]] <-  version 
+  }
+  
+  # axis
+  axes <- .get_valid_axes(image, axes)
+  meta[[ax]] <- .make_axes_meta(axes)
+  
+  # coordinate transformations
+  meta[[ct]] <- .make_empty_ct(axes)
+  
+  # datasets 
+  meta[[ds]] <- .make_datasets(scalefactors, axes)
+  
+  # multiscales
+  meta <- list(multiscales = list(meta)) 
+  if(version == "0.5"){
+    meta <- list(
+      ome = c(meta, 
+              list(version = version))
+    )
+  }
+  
+  # update json list
+  Rarr::write_zarr_attributes(zarr_path = path, 
+                              new.zattrs = meta, 
+                              overwrite = TRUE)
+}
+
+#' .get_valid_axes
+#' 
+#' Get validated axes
+#'
+#' @inheritParams ome_write
+#' 
+#' @noRd
+.get_valid_axes <- function(
+    x,
+    axes = NULL, 
+    format = "0.4"
+) {
+  
+  if (!is.null(format) && format %in% c("0.1", "0.2")) {
+    if (!is.null(axes)) {
+      message("axes ignored for version 0.1 or 0.2")
+    }
+    return(NULL)
+  }
+  
+  # We can guess axes for images, labels, points/shapes
+  ndim <- length(dim(x))
+  if (is.null(axes)) {
+    if (ndim == 2) {
+      axes <- c("y", "x")
+    } else {
+      stop("axes must be provided. Can't be guessed beyond 2D image", 
+           call. = FALSE)
+    } 
+  } else {
+    if (length(axes) != ndim) {
+      stop(
+        sprintf("axes length (%d) must match number of dimensions (%d)", 
+                length(axes), ndim),
+        call. = FALSE
+      )
+    }
+  }
+  
+  # axes may be string e.g. "tczyx"
+  if (is.character(axes) && length(axes) == 1L) 
+    axes <- strsplit(axes, "", fixed = TRUE)[[1]]
+  
+  if (!is.null(ndim) && length(axes) != ndim) {
+    stop(
+      sprintf("axes length (%d) must match number of dimensions (%d)", 
+              length(axes), ndim),
+      call. = FALSE
+    )
+  }
+  
+  axes
+}
+
+#' @noRd
+.make_axes_meta <- function(axes){
+  .DEFAULT_AXES[
+    vapply(.DEFAULT_AXES, 
+           \(.) .$name %in% axes, 
+           logical(1))
+  ]
+}
+
+#' @noRd
+.make_datasets <- function(scalefactors, axes){
+  paths <- paste0(seq_len(length(scalefactors)+1)-1)
+  scalefactors <- c(1,cumprod(scalefactors))
+  mapply(\(p, s) {
+    list(
+      coordinateTransformations = list(
+        list(
+          scale = vapply(axes, \(.){
+            if(. == "c"){
+              1
+            } else if(. =="t") {
+              0.1 
+            } else as.numeric(s)
+          }, numeric(1)),
+          type = "scale" 
+        )
+      ), 
+      path = p
+    )
+  }, paths, scalefactors, USE.NAMES = FALSE, SIMPLIFY = FALSE)
+}
+
+#' @noRd
+.make_empty_ct <- function(axes){
+  list(
+    list(
+      scale = vapply(axes, \(.){
+        if(. == "c"){
+          1
+        } else if(. =="t") {
+          0.1 
+        } else 1
+      }, numeric(1)),
+      type = "scale" 
+    )
+  )
+}
+
+.check_scalefactors <- function(sf){
+  msg <- "scale factors should be non-NA values higher than 1."
+  if(anyNA(sf))
+    stop(msg)
+  if(length(sf) < 1)
+    stop(msg)
+  if(any(!is.numeric(sf)))
+    stop(msg)
+  if(any(sf < 1))
+    stop(msg)
+}

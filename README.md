@@ -41,6 +41,12 @@ unzip(omezarrzip, exdir = td)
 x <- ome_read(td)
 ```
 
+Otherwise the read can be performed in memory as:
+
+``` r
+x <- ome_read(td, lazy = FALSE)
+```
+
 For remote OME-ZARR files, you can use the `paws.storage::s3` client to
 read the data directly from the S3 bucket without downloading it first:
 
@@ -58,4 +64,36 @@ x <- ome_read(
   s3_client = s3_client,
 )
 plot(x, all = TRUE)
+```
+
+## Write Image
+
+rome also provides utilities for writing OME-ZARR images for OME-NGFF
+versions 0.4 and 0.5.
+
+``` r
+# read image
+library(EBImage)
+img_file <- system.file("images", "sample.png", package="EBImage")
+img <- readImage(img_file)
+
+# write image, version 0.4
+ome_img <- ome_write(img,
+                     path = tempfile(fileext = ".ome.zarr"),
+                     version = "0.4",
+                     storage_options = list(chunk_dim = c(64,64)))
+```
+
+Users can also define there own scaling factors for the image pyramids.
+For a `scalefactors` with length three, the pyramid will have four
+scales. Eac scale factor in the vector defines the scale factor relative
+to the previous scale.
+
+``` r
+# write image, version 0.5
+ome_img <- ome_write(img,
+                     path = tempfile(fileext = ".ome.zarr"),
+                     version = "0.5", 
+                     scalefactors = c(2,2,3),
+                     storage_options = list(chunk_dim = c(64,64)))
 ```

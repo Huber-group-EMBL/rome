@@ -20,6 +20,7 @@ BugReports: https://github.com/Huber-group-EMBL/romeo/issues
 Depends: 
     R (>= 4.1)
 Imports:
+    S4Vectors,
     EBImage,
     jsonlite,
     jsonvalidate,

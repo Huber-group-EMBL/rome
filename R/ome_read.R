@@ -9,6 +9,7 @@
 #' @param validate Logical.If `TRUE` (the default), validate the OME-Zarr file.
 #'
 #' @importFrom stats setNames
+#' @importFrom S4Vectors new2
 #' @importFrom Rarr read_zarr_array read_zarr_attributes
 #' @importFrom ZarrArray ZarrArray
 #'
@@ -56,22 +57,23 @@ ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
     img
   })
 
-  levels <- mapply(
-    function(img, scale) {
-      attr(img, "scale") <- scale
-      img
-    },
-    x,
-    lapply(datasets, function(x) {
-      unlist(x$coordinateTransformations[[1]]$scale)
-    }),
-    SIMPLIFY = FALSE
-  )
+  # levels <- mapply(
+  #   function(img, scale) {
+  #     attr(img, "scale") <- scale
+  #     img
+  #   },
+  #   x,
+  #   lapply(datasets, function(x) {
+  #     unlist(x$coordinateTransformations[[1]]$scale)
+  #   }),
+  #   SIMPLIFY = FALSE
+  # )
+  # 
   
-  levels <- S4Vectors:::new_SimpleList_from_list("ImageList", levels)
+  x <- S4Vectors:::new_SimpleList_from_list("ImageList", x)
   S4Vectors::new2(
     "ome_zarr",
-    levels = levels,
+    levels = x,
     axes = names(scales[[1]]),
     scales = scales,
     metadata = list(version = ome_version, 

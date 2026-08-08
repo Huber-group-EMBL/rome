@@ -40,14 +40,6 @@ ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
   scales <- .get_scales(group_attributes, ome_version)
   dim_names <- .get_dim_names(group_attributes, ome_version)
 
-  .read_zarr <- function(path, s3_client = NULL, lazy = TRUE) {
-    if (lazy) {
-      ZarrArray::ZarrArray(path, s3_client = s3_client)
-    } else {
-      Rarr::read_zarr_array(path, s3_client = s3_client)
-    }
-  }
-
   x <- lapply(datasets, function(scale) {
     img <- .read_zarr(
       file.path(path, scale$path),
@@ -57,12 +49,20 @@ ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
     img
   })
 
-  x <- S4Vectors:::new_SimpleList_from_list("ImageList", x)
   S4Vectors::new2(
     "ome_zarr",
-    levels = x,
-    axes = names(scales[[1]]),
+    levels = S4Vectors:::new_SimpleList_from_list("ImageList", x),
     scales = scales,
     metadata = list(version = ome_version, type = type, dim_names = dim_names)
   )
+}
+
+#' @keywords internal
+#' @noRd
+.read_zarr <- function(path, s3_client = NULL, lazy = TRUE) {
+  if (lazy) {
+    ZarrArray::ZarrArray(path, s3_client = s3_client)
+  } else {
+    Rarr::read_zarr_array(path, s3_client = s3_client)
+  }
 }

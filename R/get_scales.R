@@ -15,11 +15,11 @@
 .get_scales <- function(metadata, ome_version) {
   multiscales <- .get_multiscales(metadata, ome_version)
   axes <- vapply(multiscales$axes, \(.) .$name, character(1))
-  scales <- lapply(multiscales$datasets, 
-                   \(.){
-                     setNames(
-                       unlist(.$coordinateTransformations[[1]]$scale), axes
-                     )
-                   })
+  scales <- lapply(multiscales$datasets, \(.) {
+    setNames(
+      unlist(.$coordinateTransformations[[1]]$scale),
+      axes
+    )
+  })
   scales
 }

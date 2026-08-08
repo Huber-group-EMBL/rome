@@ -1,8 +1,8 @@
 #' @importClassesFrom ImageArray ImageArray
 setClass(
   Class = "ome_zarr",
-  contains = "ImageArray", 
+  contains = "ImageArray",
   slots = c(
     metadata = "list"
-  ) 
+  )
 )

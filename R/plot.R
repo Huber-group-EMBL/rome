@@ -1,5 +1,5 @@
 #' ome_zarr methods
-#' 
+#'
 #' Methods for ome_zarr objects.
 #'
 #' @param x An `ome_zarr` object.
@@ -13,9 +13,9 @@
 #' plot,ome_zarr-method
 #' print
 #' negate,ome_zarr-method
-#' 
+#'
 #' @return none
-#' 
+#'
 #' @examples
 #' omezarrzip <- system.file("extdata",
 #'                           "test_ngff_image_v04.ome.zarr.zip",
@@ -23,12 +23,12 @@
 #' dir.create(td <- tempfile())
 #' unzip(omezarrzip, exdir = td)
 #' x <- ome_read(td)
-#' 
+#'
 #' # plot
 #' plot(x)
 #' plot(x, 2)
 #' plot(x, all = TRUE)
-#' 
+#'
 #' # print
 #' print(x)
 #' print(x, 2)

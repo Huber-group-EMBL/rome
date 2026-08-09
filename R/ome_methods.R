@@ -14,7 +14,7 @@
 #' print
 #' negate,ome_zarr-method
 #'
-#' @return none
+#' @returns None
 #'
 #' @examples
 #' omezarrzip <- system.file("extdata",

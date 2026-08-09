@@ -53,7 +53,9 @@ ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
     "ome_zarr",
     levels = S4Vectors:::new_SimpleList_from_list("ImageList", x),
     scales = scales,
-    metadata = list(version = ome_version, type = type, dim_names = dim_names)
+    metadata = list(version = ome_version, 
+                    type = type, 
+                    dim_names = dim_names)
   )
 }
 

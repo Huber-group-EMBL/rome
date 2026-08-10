@@ -14,6 +14,8 @@
 #' print
 #' negate,ome_zarr-method
 #'
+#' @keywords internal
+#' 
 #' @returns None
 #'
 #' @examples

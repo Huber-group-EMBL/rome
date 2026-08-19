@@ -21,6 +21,8 @@
 #' version,ome_zarr-method
 #'
 #' @returns None
+#' 
+#' @keywords internal
 #'
 #' @examples
 #' omezarrzip <- system.file("extdata",

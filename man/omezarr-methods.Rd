@@ -81,3 +81,4 @@ plot(x, all = TRUE)
 print(x)
 print(x, 2)
 }
+\keyword{internal}

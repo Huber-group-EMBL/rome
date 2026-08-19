@@ -1,6 +1,6 @@
 Package: romeo
 Title: Minimal R 'OME-Zarr' Reader
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: c(
     person("Hugo", "Gruson", , "hugo.gruson@embl.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4094-1476")),
@@ -20,12 +20,14 @@ BugReports: https://github.com/Huber-group-EMBL/romeo/issues
 Depends: 
     R (>= 4.1)
 Imports:
+    S4Vectors,
     EBImage,
     jsonlite,
     jsonvalidate,
     methods,
     Rarr (>= 2.1.27),
-    ZarrArray
+    ZarrArray,
+    ImageArray (>= 1.1.7)
 Suggests:
     BiocStyle,
     knitr,
@@ -33,9 +35,11 @@ Suggests:
     testthat,
     utils,
     withr
+Remotes:
+    BIMSBbioinfo/ImageArray
 VignetteBuilder: 
     knitr
 biocViews: DataImport
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

@@ -6,13 +6,27 @@
 \alias{plot,ome_zarr-method}
 \alias{print}
 \alias{negate,ome_zarr-method}
+\alias{dimnames,}
+\alias{dimnames,ome_zarr_method}
+\alias{metadata,}
+\alias{metadata,ome_zarr_method}
+\alias{version}
+\alias{version,ome_zarr-method}
 \alias{plot,ome_zarr,ANY-method}
 \alias{print,ome_zarr-method}
+\alias{metadata,ome_zarr-method}
+\alias{dimnames,ome_zarr-method}
 \title{ome_zarr methods}
 \usage{
 \S4method{plot}{ome_zarr,ANY}(x, level = 1, ...)
 
 \S4method{print}{ome_zarr}(x, level = 1, ...)
+
+\S4method{metadata}{ome_zarr}(x, ...)
+
+\S4method{dimnames}{ome_zarr}(x)
+
+\S4method{version}{ome_zarr}(x, ...)
 }
 \arguments{
 \item{x}{An \code{ome_zarr} object.}
@@ -34,6 +48,12 @@ Methods for ome_zarr objects.
 
 \item \code{print(ome_zarr)}: Print an \code{ome_zarr} object
 
+\item \code{metadata(ome_zarr)}: get metadata of \code{ome_zarr} object
+
+\item \code{dimnames(ome_zarr)}: get metadata of \code{ome_zarr} object
+
+\item \code{version(ome_zarr)}: get ngff version of the \code{ome_zarr} object
+
 }}
 \examples{
 omezarrzip <- system.file("extdata",
@@ -42,6 +62,15 @@ omezarrzip <- system.file("extdata",
 dir.create(td <- tempfile())
 unzip(omezarrzip, exdir = td)
 x <- ome_read(td)
+
+# metadata
+metadata(x)
+
+# dimnames
+dimnames(x)
+
+# ngff version
+version(x)
 
 # plot
 plot(x)
@@ -52,4 +81,3 @@ plot(x, all = TRUE)
 print(x)
 print(x, 2)
 }
-\keyword{internal}

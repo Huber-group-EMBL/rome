@@ -12,7 +12,7 @@
 }
 
 #' @keywords internal
-.get_scales <- function(metadata, ome_version) {
+.get_datasets_scales <- function(metadata, ome_version) {
   multiscales <- .get_multiscales(metadata, ome_version)
   axes <- vapply(multiscales$axes, \(.) .$name, character(1))
   scales <- lapply(multiscales$datasets, \(.) {

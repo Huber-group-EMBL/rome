@@ -9,7 +9,7 @@
 #' @param validate Logical.If `TRUE` (the default), validate the OME-Zarr file.
 #'
 #' @importFrom stats setNames
-#' @importFrom S4Vectors new2
+#' @importFrom methods new
 #' @importFrom Rarr read_zarr_array read_zarr_attributes
 #' @importFrom ZarrArray ZarrArray
 #'
@@ -37,7 +37,7 @@ ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
   ome_version <- .get_version(group_attributes)
   multiscales <- .get_multiscales(group_attributes, ome_version)
   datasets <- multiscales$datasets
-  scales <- .get_scales(group_attributes, ome_version)
+  scales <- .get_datasets_scales(group_attributes, ome_version)
   dim_names <- .get_dim_names(group_attributes, ome_version)
 
   x <- lapply(datasets, function(scale) {
@@ -49,7 +49,7 @@ ome_read <- function(path, s3_client = NULL, lazy = TRUE, validate = TRUE) {
     img
   })
 
-  S4Vectors::new2(
+  new(
     "ome_zarr",
     levels = S4Vectors:::new_SimpleList_from_list("ImageList", x),
     scales = scales,

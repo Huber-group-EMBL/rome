@@ -20,12 +20,16 @@ test_that("parse ome version", {
     # image
     x <- ome_read(td)
     expect_s4_class(x, "ome_zarr")
-    expect_identical(x@metadata$type, "image")
+    expect_identical(version(x), names(format[i]))
+    expect_identical(dimnames(x), c("y", "x"))
+    expect_identical(metadata(x)$type, "image")
 
     # labels
     x <- ome_read(file.path(td, "labels/blobs"))
     expect_s4_class(x, "ome_zarr")
-    expect_identical(x@metadata$type, "label")
+    expect_identical(version(x), names(format[i]))
+    expect_identical(dimnames(x), c("y", "x"))
+    expect_identical(metadata(x)$type, "label")
   }
 })
 
@@ -44,7 +48,9 @@ test_that("read spatialdata elements", {
     expect_no_condition()
 
   expect_s4_class(x, "ome_zarr")
-  expect_identical(x@metadata$type, "image")
+  expect_identical(version(x), "0.5-dev-spatialdata")
+  expect_identical(dimnames(x), c("c", "y", "x"))
+  expect_identical(metadata(x)$type, "image")
 
   blobs_label <- system.file(
     "extdata",
@@ -58,7 +64,9 @@ test_that("read spatialdata elements", {
     expect_no_condition()
 
   expect_s4_class(x, "ome_zarr")
+  expect_identical(version(x), "0.5-dev-spatialdata")
+  expect_identical(dimnames(x), c("y", "x"))
   # This is a bit counterintuitive but spatialdata labels elements are encoded
   # as multiscale image from an OME point of view.
-  expect_identical(x@metadata$type, "image")
+  expect_identical(metadata(x)$type, "image")
 })

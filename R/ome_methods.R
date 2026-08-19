@@ -13,8 +13,12 @@
 #' plot,ome_zarr-method
 #' print
 #' negate,ome_zarr-method
-#'
-#' @keywords internal
+#' dimnames,
+#' dimnames,ome_zarr_method
+#' metadata,
+#' metadata,ome_zarr_method
+#' version
+#' version,ome_zarr-method
 #'
 #' @returns None
 #'
@@ -25,6 +29,15 @@
 #' dir.create(td <- tempfile())
 #' unzip(omezarrzip, exdir = td)
 #' x <- ome_read(td)
+#'
+#' # metadata
+#' metadata(x)
+#'
+#' # dimnames
+#' dimnames(x)
+#'
+#' # ngff version
+#' version(x)
 #'
 #' # plot
 #' plot(x)
@@ -51,16 +64,37 @@ setMethod("plot", "ome_zarr", function(x, level = 1, ...) {
 })
 
 #' @describeIn omezarr-methods Print an `ome_zarr` object
+#' @importFrom utils head
 #' @export
 setMethod("print", "ome_zarr", function(x, level = 1, ...) {
   cat(
     "Multiscale OME-Zarr ",
-    x@metadata$type,
+    metadata(x)$type,
     " (v",
-    x@metadata$version,
+    version(x),
     ") object.\n",
     sep = ""
   )
   cat(sprintf("Scale: %d/%d", level, length(x)), "\n")
   print(head(x[[level]], rep_len(5, length(dim(x[[level]]))), ...))
+})
+
+#' @describeIn omezarr-methods get metadata of `ome_zarr` object
+#' @importFrom S4Vectors metadata
+#' @export
+setMethod("metadata", "ome_zarr", function(x, ...) {
+  x@metadata
+})
+
+#' @describeIn omezarr-methods get metadata of `ome_zarr` object
+#' @export
+setMethod("dimnames", "ome_zarr", function(x) {
+  metadata(x)$dim_names
+})
+
+
+#' @describeIn omezarr-methods get ngff version of the `ome_zarr` object
+#' @export
+setMethod("version", "ome_zarr", function(x, ...) {
+  metadata(x)$version
 })
